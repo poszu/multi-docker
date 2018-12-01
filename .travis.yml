@@ -1,0 +1,21 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t poszu/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run poszu/react-test npm test -- --coverage
+
+after_success:
+    - docker build -t poszu/multi-client ./client
+    - docker build -t poszu/multi-nginx ./nginx
+    - docker build -t poszu/multi-server ./server
+    - docker build -t poszu/multi-worker ./worker
+    # Log in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push poszu/multi-client
+    - docker push poszu/multi-nginx
+    - docker push poszu/multi-server
+    - docker push poszu/multi-worker
