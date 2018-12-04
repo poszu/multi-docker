@@ -17,14 +17,14 @@
         },
         {
             "name": "server",
-            "image": "poszu/server-client",
+            "image": "poszu/multi-server",
             "hostname": "api",
             "essential": false,
             "memory": 128
         },
         {
             "name": "nginx",
-            "image": "poszu/server-nginx",
+            "image": "poszu/multi-nginx",
             "hostname": "nginx",
             "essential": true,
             "memory": 128,
